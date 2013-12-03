@@ -6,154 +6,187 @@
 # del interprete de codificacion...
 
 # Limpia un array de espacios en blanco y elementos repetidos
-def clean_array(array):
-    clear_array = []
+def limpiar_lista(lista):
+    listaLimpia = []
 
     # Recorre el array
-    for element in array:
+    for elemento in lista:
         # si el elemento NO esta en el "array limpio" ni es 'vacio' lo inserta
-        if(element not in clear_array) and element != ' ' and element != '':
-            clear_array.append(int(element))
+        if(elemento not in listaLimpia) and elemento != ' ' and elemento != '':
+            listaLimpia.append(int(elemento))
 
     # Devuelve el nuevo y limpio array
-    return clear_array
+    return listaLimpia
 
 # Asigna a la fila y columna un valor calculado
-def row_col(p, rows, cols, i):
-    head = inc = 1
+def calcula_fila_y_columna(punto, filas, columnas, i):
+    cabeza = inc = 1
 
-    # Incrementa head e inc mientras que el valor p sea mayor que head + inc
-    while p >= head + inc:
-        head += inc
+    # Incrementa cabeza e inc mientras que el valor 'punto' sea mayor que
+    # cabeza + inc
+    while punto >= cabeza + inc:
+        cabeza += inc
         inc += 1
 
-    # asigna inc a la fila y el valor p menos head a la columna
-    rows[i] = inc
-    cols[i] = p - head
+    # asigna inc a la fila y el valor 'punto' menos cabeza a la columna
+    filas[i] = inc
+    columnas[i] = punto - cabeza
 
 
 # Verifica si cumple las condiciones para que los puntos ingresados
-# partiendo de la matriz armada anteriormente en "row_col"
+# partiendo de la matriz armada anteriormente en "calcula_fila_y_columna"
 # sean realmente los de un triangulo
-def triangle(row, col):
-    if row[0] == row[1]:
-        len_diff = col[1] - col[0]
+def triangulo(fila, columna):
+    if fila[0] == fila[1]:
+        diferencia = columna[1] - columna[0]
 
         return (
-                len_diff > 0 and
-                col[2] == col[1] and
-                row[2] == row[0] + len_diff
+                diferencia > 0 and
+                columna[2] == columna[1] and
+                fila[2] == fila[0] + diferencia
                 )
     else:
-        len_diff = row[1] - row[0]
+        diferencia = fila[1] - fila[0]
 
         return (
-                len_diff > 0 and
-                col[0] == col[1] and
-                row[2] == row[1] and
-                col[2] == col[1] + len_diff
+                diferencia > 0 and
+                columna[0] == columna[1] and
+                fila[2] == fila[1] and
+                columna[2] == columna[1] + diferencia
                 )
 
 
 # Verifica si cumple las condiciones para que los puntos ingresados
-# partiendo de la matriz armada anteriormente en "row_col"
+# partiendo de la matriz armada anteriormente en "calcula_fila_y_columna"
 # sean realmente los de un paralelogramo
-def parallelogram(row, col):
-    if row[0] == row[1]:
-        len_diff = col[1] - col[0]
+def paralelogramo(fila, columna):
+    if fila[0] == fila[1]:
+        diferencia = columna[1] - columna[0]
 
         return (
-                len_diff > 0 and
-                row[2] == row[3] and
-                col[3] - col[2] == len_diff and
-                row[2] - row[0] == len_diff and
-                (col[2] == col[0] or col[2] == col[1])
+                diferencia > 0 and
+                fila[2] == fila[3] and
+                columna[3] - columna[2] == diferencia and
+                fila[2] - fila[0] == diferencia and
+                (columna[2] == columna[0] or columna[2] == columna[1])
                 )
     else:
-        len_diff = row[1] - row[0]
+        diferencia = fila[1] - fila[0]
 
         return (
-                len_diff > 0 and
-                col[0] == col[1] and
-                col[2] == col[3] and
-                row[1] == row[2] and
-                row[3] - row[2] == len_diff and
-                col[2] - col[1] == len_diff
+                diferencia > 0 and
+                columna[0] == columna[1] and
+                columna[2] == columna[3] and
+                fila[1] == fila[2] and
+                fila[3] - fila[2] == diferencia and
+                columna[2] - columna[1] == diferencia
                 )
 
 
 # Verifica si cumple las condiciones para que los puntos ingresados
-# partiendo de la matriz armada anteriormente en "row_col"
-# sean realmente los de un hexagono
-def hexagon(row, col):
-    len_diff = col[1] - col[0]
+# partiendo de la matriz armada anteriormente en "calcula_fila_y_columna"
+# sean realmente los de un hexagonoo
+def hexagono(fila, columna):
+    diferencia = columna[1] - columna[0]
 
     return (
-        len_diff > 0 and
-        row[0] == row[1] and
-        col[2] == col[0] and
-        row[2] == row[0] + len_diff and
-        col[3] == col[1] + len_diff and
-        row[3] == row[2] and
-        col[4] == col[1] and
-        row[4] == row[2] + len_diff and
-        col[5] == col[3] and
-        row[5] == row[4]
+        diferencia > 0 and
+        fila[0] == fila[1] and
+        columna[2] == columna[0] and
+        fila[2] == fila[0] + diferencia and
+        columna[3] == columna[1] + diferencia and
+        fila[3] == fila[2] and
+        columna[4] == columna[1] and
+        fila[4] == fila[2] + diferencia and
+        columna[5] == columna[3] and
+        fila[5] == fila[4]
         )
 
-def main():
-    # Iniciamos los vectores
-    # no se puede hacer row = col = [] porque referencian a lo mismo
-    row = []
-    col = []
-
-    # Da bienvenida
-    print "\n ###   Welcome to the triangle algorithm   ### \n"
+def principal():
+    # Iniciamos los vectores, no se puede hacer fila = columna = []
+    # porque referencian a lo mismo bloque de memoria
+    fila = []
+    columna = []
 
     # Pide ingresar por teclado la lista de numeros
-    prompt = raw_input('Type 3, 4 or 6 numbers space-separated: ')
+    puntosIngresados = raw_input(
+            'Ingrese 3, 4 o 6 numeros separados por coma para comenzar: '
+            )
 
     # Separa y deja un array limpio con los numeros ingresados
-    points = clean_array(prompt.split(' '))
+    puntos = limpiar_lista(puntosIngresados.split(' '))
 
     # Asigna a n la cantidad de elementos tipeados
-    n = len(points)
+    n = len(puntos)
 
-    # Asignamos -1 en cada posicion para no obtener "index out of range"
+    # Asignamos -1 en cada posicion para no obtener index out of range"
     for i in range(n):
-        row.append(-1)
-        col.append(-1)
-
+        fila.append(-1)
+        columna.append(-1)
 
     # Muestra los numeros ingresados para posterior mensaje de analisis
-    line = ' '.join(map(str, points))
-    print "\nThe points ", line
+    print "\n" , 'La combinacion de numeros: ', ', '.join(map(str, puntos))
 
     # Ordena los elementos
-    points.sort()
+    puntos.sort()
 
     # Asigna en cada posicion de la fila y de la columna el valor correspondiente
     # se pasa la i ya que las listas se pasan por REFERENCIA encambio los valores no
     for i in range(n):
-        row_col(points[i], row, col, i)
+        calcula_fila_y_columna(puntos[i], fila, columna, i)
 
     # Llama al metodo correcto dependiendo el numero de puntos que ingreso
-    is_valid = (
-            triangle(row, col) if (n == 3) else
-            parallelogram(row, col) if (n == 4) else
-            hexagon(row, col) if (n == 6) else False
+    esValido = (
+            triangulo(fila, columna) if n == 3 else
+            paralelogramo(fila, columna) if n == 4 else
+            hexagono(fila, columna) if (n == 6) else False
             )
-
 
     # muestra un mensaje dependiendo la verasidad de cada metodo con los puntos
     # ingresados por el usuario
-    print 'Are', '' if is_valid else 'not', 'the vertices of', (
-                'an acceptable figure' if (not is_valid) else
-                'a triangle' if(n == 3) else
-                'a parallelogram' if (n == 4) else 'a hexagon'
-                )
+    mensajeFinal = ''
 
+    if not esValido:
+        mensajeFinal += 'no '
+
+    mensajeFinal += 'son vertices de '
+
+    if esValido:
+        mensajeFinal += (
+            'un triangulo.' if n == 3 else
+            'un paralelogramo.' if n == 4 else
+            'un hexagono.' if n == 6 else ''
+            )
+    else:
+        mensajeFinal += 'una figura aceptable'
+
+
+    print mensajeFinal, "\n\nGracias por jugar ^^ \n"
+
+
+# Damos bienvenida y explicacion
+print "\n ###   Bienvenido al algoritmo del triangulo   ### \n"
+print "Este juego se basa en ingresar 3, 4 o 6 puntos para saber si los mismos"
+print "son parte de una figura geometrica (triangulo, paralelogramo, hexagono"
+print "respectivamente).\n"
+
+print "Los puntos van del 1 en adelante conformando un triangulo numerico:"
+print "         1"
+print "        / \ "
+print "       2---3"
+print "      / \ / \ "
+print "     4---5---6 "
+print "    / \ / \ / \ "
+print "   7---8---9---10 "
+print "  / \ / \ / \ /  \ "
+print " 11--12--13--14--15 "
+print " .................. \n"
+
+print "Por ej:"
+print "- 1 2 3 => Es un Triangulo"
+print "- 4 6 11 13 => Es un Paralelogramo"
+print "- 4 5 7 9 12 13 => Es un Hexagono\n"
 
 # Llama a la funcion y la repite infinitamente para seguir jugando
 while True:
-    main()
+    principal()
